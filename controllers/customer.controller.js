@@ -1,13 +1,14 @@
-const Customer = require('../models/customer.model');
+const customerModel = require('../models/customer.model');
 
 const registerCustomer = async (req, res) => {
     console.log("success334534");
     const { name, email, address, salary, imageUri } = req.body;
     console.log(name, email, address, salary, imageUri);
-    const customer = new Customer({name, email, address, salary, imageUri});
-    console.log(customer);
+    const customer = new customerModel(req.body);
     try {
-        const result = await Customer.create({name, email, address, salary, imageUri});
+
+        console.log(customer);
+        const result = await customer.save();
         console.log("success ", result);
         if (result) {
             return res.status(201).send(result);
@@ -20,7 +21,7 @@ const registerCustomer = async (req, res) => {
 
 const getCustomers = async (req, res) => {
     try {
-        const result = await Customer.find();
+        const result = await customerModel.find();
         if (result) {
             return res.status(200).send(result);
         }
@@ -33,7 +34,7 @@ const getCustomers = async (req, res) => {
 const getCustomerById = async (req, res) => {
     const id = req.params.id;
     try {
-        const result = await Customer.findById(id);
+        const result = await customerModel.findById(id);
         if (result) {
             return res.status(200).send(result);
         }
@@ -47,8 +48,8 @@ const updateCustomer = async (req, res) => {
     const id = req.params.id;
     const { name, email, address, salary, imageUri } = req.body;
     try {
-        const customer = new Customer({name, email, address, salary, imageUri});
-        const result = await Customer.findByIdAndUpdate(id, customer);
+        const customer = new customerModel({name, email, address, salary, imageUri});
+        const result = await customerModel.findByIdAndUpdate(id, customer);
         if (result) {
             return res.status(200).send(result);
         }
@@ -61,7 +62,7 @@ const updateCustomer = async (req, res) => {
 const deleteCustomer = async (req, res) => {
     const id = req.params.id;
     try {
-        const result = await Customer.findByIdAndDelete(id);
+        const result = await customerModel.findByIdAndDelete(id);
         if (result) {
             return res.status(200).send(result);
         }
