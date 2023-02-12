@@ -1,8 +1,8 @@
-const Item = require('../models/item.model');
+const itemModel = require('../models/item.model');
 
 const createItem = async (req, res) => {
     const { itemCode, description, qtyOnHand, unitPrice } = req.body;
-    const item = new Item({itemCode, description, qtyOnHand, unitPrice});
+    const item = new itemModel({itemCode, description, qtyOnHand, unitPrice});
     try {
         const result = await item.save();
         if (result) {
@@ -16,7 +16,7 @@ const createItem = async (req, res) => {
 
 const getItems = async (req, res) => {
     try {
-        const result = await Item.find();
+        const result = await itemModel.find();
         if (result) {
             return res.status(200).send(result);
         }
@@ -29,7 +29,7 @@ const getItems = async (req, res) => {
 const getItemById = async (req, res) => {
     const id = req.params.id;
     try {
-        const result = await Item.findById(id);
+        const result = await itemModel.findById(id);
         if (result) {
             return res.status(200).send(result);
         }
@@ -43,7 +43,7 @@ const updateItem = async (req, res) => {
     const id = req.params.id;
     const { itemCode, description, qtyOnHand, unitPrice } = req.body;
     try {
-        const result = await Item.findByIdAndUpdate(id, {itemCode, description, qtyOnHand, unitPrice});
+        const result = await itemModel.findByIdAndUpdate(id, {itemCode, description, qtyOnHand, unitPrice});
         if (result) {
             return res.status(200).send(result);
         }
@@ -56,7 +56,7 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
     const id = req.params.id;
     try {
-        const result = await Item.findByIdAndDelete(id);
+        const result = await itemModel.findByIdAndDelete(id);
         if (result) {
             return res.status(200).send(result);
         }

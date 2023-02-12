@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
-        ref: 'Customer'
+        ref: 'customerModel'
     },
     orderDate: {
         type: Date,
@@ -13,4 +13,6 @@ const orderSchema = new Schema({
 
 }, {timestamps: true});
 
-module.exports = mongoose.model("Orders", orderSchema);
+const orderModel = mongoose.model("Orders", orderSchema);
+
+module.exports = orderModel;

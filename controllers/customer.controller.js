@@ -47,9 +47,10 @@ const getCustomerById = async (req, res) => {
 const updateCustomer = async (req, res) => {
     const id = req.params.id;
     const { name, email, address, salary, imageUri } = req.body;
+    console.log(name, email, address, salary, imageUri);
+    console.log(id);
     try {
-        const customer = new customerModel({name, email, address, salary, imageUri});
-        const result = await customerModel.findByIdAndUpdate(id, customer);
+        const result = await customerModel.findByIdAndUpdate(id, {name, email, address, salary, imageUri});
         if (result) {
             return res.status(200).send(result);
         }

@@ -1,10 +1,10 @@
 const ordersModel = require('../models/orders.model');
 
 const createOrder = async (req, res) => {
-    const { orderDate, customerId } = req.body;
-    const order = new ordersModel({date, customerId});
+    const { orderDate, customer } = req.body;
+    const order = new ordersModel({orderDate, customer});
     try {
-        const result = await ordersModel.create({orderDate, customerId});
+        const result = await order.save();
         if (result) {
             return res.status(201).send(result);
         }
@@ -41,9 +41,9 @@ const getOrderById = async (req, res) => {
 
 const updateOrder = async (req, res) => {
     const id = req.params.id;
-    const { date, customerId } = req.body;
+    const { date, customer } = req.body;
     try {
-        const result = await ordersModel.findByIdAndUpdate(id, {date, customerId});
+        const result = await ordersModel.findByIdAndUpdate(id, {date, customer});
         if (result) {
             return res.status(200).send(result);
         }
