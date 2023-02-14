@@ -58,14 +58,10 @@ const getItemByItemCode = async (req, res) => {
 
 const updateItem = async (req, res) => {
   const id = req.params.id;
-  const { itemCode, description, qtyOnHand, unitPrice } = req.body;
+  const { itemCode, itemImg, itemName, description, qtyOnHand, unitPrice } =
+  req.body;
   try {
-    const result = await itemModel.findByIdAndUpdate(id, {
-      itemCode,
-      description,
-      qtyOnHand,
-      unitPrice,
-    });
+    const result = await itemModel.findOneAndUpdate(id, { itemCode, itemImg, itemName, description, qtyOnHand, unitPrice });
     if (result) {
       return res.status(200).send(result);
     }
