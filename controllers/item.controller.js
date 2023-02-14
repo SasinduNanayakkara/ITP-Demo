@@ -44,6 +44,18 @@ const getItemById = async (req, res) => {
   }
 };
 
+const getItemByItemCode = async (req, res) => {
+  const id = req.params.itemCode;
+  try {
+    const result = await itemModel.findOne({ itemCode: id });
+    if (result) {
+      return res.status(200).send(result);
+    }
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+};
+
 const updateItem = async (req, res) => {
   const id = req.params.id;
   const { itemCode, description, qtyOnHand, unitPrice } = req.body;
@@ -74,4 +86,11 @@ const deleteItem = async (req, res) => {
   }
 };
 
-module.exports = { createItem, getItems, getItemById, updateItem, deleteItem };
+module.exports = {
+  createItem,
+  getItems,
+  getItemById,
+  updateItem,
+  deleteItem,
+  getItemByItemCode,
+};
