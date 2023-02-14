@@ -1,8 +1,18 @@
 const itemModel = require('../models/item.model');
 
 const createItem = async (req, res) => {
-  const { itemCode, itemImg, itemName, description, qtyOnHand, unitPrice } =
+  let { itemCode, itemImg, itemName, description, qtyOnHand, unitPrice } =
     req.body;
+
+  const lastItem = await itemModel.findOne().sort({ _id: -1 });
+
+  if (lastItem) {
+    const splitCharactors = lastItem.itemCode.split('itm');
+    itemCode = 'itm' + (parseInt(splitCharactors[1]) + 1);
+  } else {
+    itemCode = 'itm1';
+  }
+
   const item = new itemModel({
     itemCode,
     itemImg,
@@ -14,7 +24,7 @@ const createItem = async (req, res) => {
   try {
     const result = await item.save();
     if (result) {
-      return res.status(201).send({
+      return res.status(200).send({
         message: 'Item created successfully',
         data: result,
         status: 200,
